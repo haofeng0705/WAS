@@ -2,10 +2,9 @@ import { defineStore } from 'pinia'
 
 export const useLoginStore = defineStore('login', {
 	state: (): any => ({
-		// userName: JSON.parse(sessionStorage.getItem('userName') ?? '') || 'CQUPT',
-		// userGrade: JSON.parse(sessionStorage.getItem('userGrade') ?? '') || '二年级'
-		userName: 'CQUPT',
-		userGrade:  '二年级'
+		userName: JSON.parse(sessionStorage.getItem('userName') ||  JSON.stringify('CQUPT'))  ,
+		userGrade: JSON.parse(sessionStorage.getItem('userGrade') ||  JSON.stringify('二年级'))
+
 	}),
 
 	getters: {},

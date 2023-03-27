@@ -43,12 +43,14 @@
 </template>
 
 <script setup lang="ts">
+import { ElMessage } from 'element-plus'
+import router from '@/router'
 import { DateFormat } from '@/selfTools/DateTools.js'
 import titleRight from '@/components/login/TitleRight.vue'
 import { loginUser, getToken } from '@/api/login/login'
 import { getWep } from '@/api/monitor/monitor'
 import logo from '@/assets/images/logo.png'
-import { ref, reactive } from 'vue'
+import { ref, reactive, getCurrentInstance } from 'vue'
 import { useAppStore } from '@/store/app'
 import { useLoginStore } from '@/store/login'
 const imgData = reactive({ logo })
@@ -78,36 +80,34 @@ const appStore = useAppStore()
 const loginStore = useLoginStore()
 
 function submitForm() {
-	// loginUser({
-	// 	loginname: username.value,
-	// 	password: password.value
-	// })
-	// 	.then((res) => {
-	// 		const { code, msg, data } = res
-	// 		if (code == 200) {
-	// 			getToken({
-	// 				loginname: username.value,
-	// 				password: password.value
-	// 			}).then((res) => {
-	// 				appStore.UP_ACTIVE_ROUTER(0)
-	// 				appStore.UP_TOKEN(res.data)
-	// 				loginStore.UP_USER_NAME(data.name);
-	// 				loginStore.UP_USER_GRADE(data.permissionLevelName);
+	loginUser({
+		loginname: username.value,
+		password: password.value
+	})
+		.then((res) => {
+			const { code, msg, data } = res
+			if (code == 200) {
+				getToken({
+					loginname: username.value,
+					password: password.value
+				}).then((res) => {
+					appStore.UP_ACTIVE_ROUTER(0)
+					appStore.UP_TOKEN(res.data)
+					loginStore.UP_USER_NAME(data.name)
+					loginStore.UP_USER_GRADE(data.permissionLevelName)
 
-
-	// 				that.$message.success('登陆成功')
-	// 				that.$router.push('/monitor')
-	// 			})
-	// 		} else if (code == 900) {
-	// 			this.$message.warning(msg)
-	// 			return false
-	// 		}
-	// 	})
-	// 	.catch((error) => {
-	// 		this.$message.warning('网络异常')
-	// 		return false
-	// 	})
-	console.log(111);
+					ElMessage.success('登陆成功')
+					router.push('/monitor')
+				})
+			} else if (code == 900) {
+				ElMessage.warning(msg)
+				return false
+			}
+		})
+		.catch((error) => {
+			ElMessage.warning('网络异常')
+			return false
+		})
 }
 </script>
 

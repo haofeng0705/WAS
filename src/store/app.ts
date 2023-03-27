@@ -3,15 +3,10 @@ import { defineStore } from 'pinia'
 
 export const useAppStore = defineStore('app', {
 	state: (): any => ({
-		// activeRouter: JSON.parse(sessionStorage.getItem('activeRouter') ?? '') || 0,
-		// weatherStatus: JSON.parse(sessionStorage.getItem('weatherStatus') ?? '') || '晴',
-		// weatherTem: JSON.parse(sessionStorage.getItem('weatherTem') ?? '') || '26°',
-		// token: JSON.parse(sessionStorage.getItem('token') ?? '') || ''
-		activeRouter:  0,
-		weatherStatus:  '晴',
-		weatherTem:  '26°',
-		token:  ''
-
+		activeRouter: JSON.parse(sessionStorage.getItem('activeRouter') ||  JSON.stringify(0)) ,
+    weatherStatus: JSON.parse(sessionStorage.getItem('weatherStatus') || JSON.stringify('晴')) ,
+		weatherTem: JSON.parse(sessionStorage.getItem('weatherTem') ||JSON.stringify('26°')) ,
+		token: JSON.parse(sessionStorage.getItem('token') || JSON.stringify(''))
 	}),
 
 	getters: {},
